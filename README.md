@@ -36,6 +36,12 @@
       - [Without it](#without-it)
       - [With it](#with-it)
   - [UUID](#uuid)
+  - [Docker and PostgresSQL](#docker-and-postgressql)
+    - [Stop / Start container](#stop--start-container)
+    - [Remove a docker container](#remove-a-docker-container)
+  - [PG Admin](#pg-admin)
+    - [Why?](#why)
+    - [Setup](#setup)
 
 ## CLI Generation
 
@@ -245,3 +251,33 @@ Implementation of error handling
   - <https://www.youtube.com/watch?v=w0VFcVYIfhg>
 - Auto increment vs UUID
   - <https://www.youtube.com/watch?v=s5Im6LWfLrY>
+
+## Docker and PostgresSQL
+
+command to create a postgressql docker database:
+`docker run --name postgres-nest -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres`
+- docker run 
+- --name postgres-nest : names the container
+- -p : specifies the port to expose the container on
+- -e : define the enviromental passowrd name POSTGRES_PASSWORD
+- -d postgres: names the docker image in dockerhub like a github project
+
+### Stop / Start container
+
+- `docker container stop postgres-nest`
+- `docker container start postgres-nest`
+### Remove a docker container
+
+`docker container rm postgres-nest`
+
+## PG Admin
+
+### Why?
+
+Manage databse without writing code.
+
+### Setup
+
+![create-server](assets/setup-postgres/create-server.png)
+![define-name](assets/setup-postgres/define-name.png)
+![define-connection](assets/setup-postgres/define-connection.png)

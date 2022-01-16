@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
 // import { PatchField, PatchTaskDto } from './dto/patch-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 
 /* great for handling business logic
 - error messages
@@ -95,9 +96,9 @@ export class TasksService {
   //   return this.getTaskById(id);
   // }
 
-  updateTaskStatus(id: string, status: TaskStatus): Task {
+  updateTaskStatus(id: string, updateTaskStatusDto: UpdateTaskStatusDto): Task {
     const task = this.getTaskById(id);
-    task.status = status;
+    task.status = updateTaskStatusDto.status;
     return task;
   }
 

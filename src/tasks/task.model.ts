@@ -10,6 +10,7 @@ export interface Task {
 
 /* typescript emun
 only allows one value
+- it's condiser an object that can only accept only values from the enum
  */
 export enum TaskStatus {
   OPEN = 'OPEN',
