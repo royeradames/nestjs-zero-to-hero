@@ -20,6 +20,16 @@
     - [Qualities](#qualities)
       - [Interface vs Class](#interface-vs-class)
       - [Examples](#examples)
+  - [Pipes](#pipes)
+    - [What are pipes?](#what-are-pipes)
+    - [Custom Pipes](#custom-pipes)
+    - [Consuming pipes](#consuming-pipes)
+      - [Handler-level pipes](#handler-level-pipes)
+      - [Parameter-level pipes](#parameter-level-pipes)
+      - [Global pipes](#global-pipes)
+      - [Parameter-level VS Handler-level pipes. Which one?](#parameter-level-vs-handler-level-pipes-which-one)
+    - [Pipe flow](#pipe-flow)
+    - [Validation Pipe](#validation-pipe)
   - [Typescript](#typescript)
     - [The private/public keyword in the constructor is a nice syntactic sugar](#the-privatepublic-keyword-in-the-constructor-is-a-nice-syntactic-sugar)
       - [Without it](#without-it)
@@ -141,6 +151,51 @@ You can refer to classes in run time while interfaces you cannot.
 
 Data transfer objects are **not mandatory** but applying them as soon as possible will **makes it easier to maintain and refactor** your code.
 
+## Pipes
+
+### What are pipes?
+
+![what are pipes?](assets/pipes/what-are-pipes.png)
+
+### Custom Pipes
+
+![custom pipes](assets/pipes/custom-pipes.png)
+
+### Consuming pipes
+
+#### Handler-level pipes
+
+![handle level pipes](assets/pipes/handle-level-pipes.png)
+
+#### Parameter-level pipes
+
+![parameter level pipes](assets/pipes/parameter-level-pipes.png)
+
+#### Global pipes
+
+![global pipes](assets/pipes/global-pipes.png)
+
+#### Parameter-level VS Handler-level pipes. Which one?
+
+![parameter-level-vs-handler-level-pipes](assets/pipes/parameter-level-vs-handler-level-pipes.png)
+
+### Pipe flow
+
+![pipe flow](assets/pipes/pipe-flow.png)
+
+### Validation Pipe
+
+Lets the DTOs files handle the validation.
+
+To use the validation pipe you need packages:
+- class-validator
+- class-transformer
+
+Recommended to consume the validation pipes globally.
+
+![applying-validation-pipe-globally](assets/pipes/validationPipe/applying-valition-pipe-globally.png)
+
+![using-validation-pipe](assets/pipes/validationPipe/using-valition-pipe.png)
 ## Typescript
 
 ### The private/public keyword in the constructor is a nice syntactic sugar
