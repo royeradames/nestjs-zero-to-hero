@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import {
   DeleteTaskResponse,
   DeleteStatus,
@@ -9,6 +9,12 @@ import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
 // import { PatchField, PatchTaskDto } from './dto/patch-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+
+/* great for handling business logic
+- error messages
+- databse queries
+- desctructuring inputs
+ */
 @Injectable()
 export class TasksService {
   tasks: Task[] = [];
@@ -33,7 +39,20 @@ export class TasksService {
   }
 
   getTaskById(id: string): Task {
-    return this.tasks.find((task) => task.id === id);
+    //  try to get task
+    const task = this.tasks.find((task) => task.id === id);
+
+    // if not found, throw an error (404 not found)
+    if (!task) {
+      /* list of nestjs execeptions 
+        - https://docs.nestjs.com/exception-filters#built-in-http-exceptions
+        - if a js error bubbles up nest will default to responding with a 500 error
+      */
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
+
+    // otherwise, return the found task
+    return task;
   }
 
   createTask(createTaskDto: CreateTaskDto): Task {

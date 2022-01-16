@@ -30,6 +30,7 @@
       - [Parameter-level VS Handler-level pipes. Which one?](#parameter-level-vs-handler-level-pipes-which-one)
     - [Pipe flow](#pipe-flow)
     - [Validation Pipe](#validation-pipe)
+  - [Error Handling](#error-handling)
   - [Typescript](#typescript)
     - [The private/public keyword in the constructor is a nice syntactic sugar](#the-privatepublic-keyword-in-the-constructor-is-a-nice-syntactic-sugar)
       - [Without it](#without-it)
@@ -196,6 +197,35 @@ Recommended to consume the validation pipes globally.
 ![applying-validation-pipe-globally](assets/pipes/validationPipe/applying-valition-pipe-globally.png)
 
 ![using-validation-pipe](assets/pipes/validationPipe/using-valition-pipe.png)
+ 
+## Error Handling
+Implementation of error handling
+
+![error-handling](assets/error-handling.png)
+
+[List of build in errors](https://docs.nestjs.com/exception-filters#built-in-http-exceptions):
+
+- BadRequestException
+- UnauthorizedException
+- NotFoundException
+- ForbiddenException
+- NotAcceptableException
+- RequestTimeoutException
+- ConflictException
+- GoneException
+- HttpVersionNotSupportedException
+- PayloadTooLargeException
+- UnsupportedMediaTypeException
+- UnprocessableEntityException
+- InternalServerErrorException
+- NotImplementedException
+- ImATeapotException
+- MethodNotAllowedException
+- BadGatewayException
+- ServiceUnavailableException
+- GatewayTimeoutException
+- PreconditionFailedException
+
 ## Typescript
 
 ### The private/public keyword in the constructor is a nice syntactic sugar
