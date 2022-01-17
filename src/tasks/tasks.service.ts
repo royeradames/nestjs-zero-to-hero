@@ -51,6 +51,10 @@ export class TasksService {
   //   return tasks;
   // }
 
+  getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.tasksRepository.getTasks(filterDto);
+  }
+
   /* whenever you work with database the work will be async
   - you can use async/await to make it sync
   - and the returining type needs to be a promise
