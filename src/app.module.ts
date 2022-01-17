@@ -19,6 +19,7 @@ import { TasksModule } from './tasks/tasks.module';
       - the connection is configured in the ormconfig.json file
       - the ormconfig.json file is a json file that tells nestjs how to connect to the database
       - this is similar to how postgresql was configured 
+      in submodules we use forFeature() and in root module we use forRoot()
      */
     TypeOrmModule.forRoot({
       type: 'postgres',

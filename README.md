@@ -46,6 +46,8 @@
     - [Implementing TypeORM](#implementing-typeorm)
       - [Active Record vs Data Mapper](#active-record-vs-data-mapper)
       - [creating new table](#creating-new-table)
+      - [Creating repository](#creating-repository)
+        - [Setting up the repository for property injection](#setting-up-the-repository-for-property-injection)
 
 ## CLI Generation
 
@@ -332,3 +334,10 @@ Echelon uses **Data Mapper**.
 
 Note: Half of the class about database has been setup and understanding.
 
+#### Creating repository
+
+![creating repository](assets/typeorm/creating-repository.png)
+
+##### Setting up the repository for property injection
+
+![setting up the repository for property injection](assets/typeorm/setting-up-the-repository-for-property-injection.png)
