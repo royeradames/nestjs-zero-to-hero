@@ -42,6 +42,10 @@
   - [PG Admin](#pg-admin)
     - [Why?](#why)
     - [Setup](#setup)
+  - [Type ORM](#type-orm)
+    - [Implementing TypeORM](#implementing-typeorm)
+      - [Active Record vs Data Mapper](#active-record-vs-data-mapper)
+      - [creating new table](#creating-new-table)
 
 ## CLI Generation
 
@@ -195,6 +199,7 @@ Data transfer objects are **not mandatory** but applying them as soon as possibl
 Lets the DTOs files handle the validation.
 
 To use the validation pipe you need packages:
+
 - class-validator
 - class-transformer
 
@@ -203,8 +208,9 @@ Recommended to consume the validation pipes globally.
 ![applying-validation-pipe-globally](assets/pipes/validationPipe/applying-valition-pipe-globally.png)
 
 ![using-validation-pipe](assets/pipes/validationPipe/using-valition-pipe.png)
- 
+
 ## Error Handling
+
 Implementation of error handling
 
 ![error-handling](assets/error-handling.png)
@@ -256,7 +262,8 @@ Implementation of error handling
 
 command to create a postgressql docker database:
 `docker run --name postgres-nest -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres`
-- docker run 
+
+- docker run
 - --name postgres-nest : names the container
 - -p : specifies the port to expose the container on
 - -e : define the enviromental passowrd name POSTGRES_PASSWORD
@@ -266,6 +273,7 @@ command to create a postgressql docker database:
 
 - `docker container stop postgres-nest`
 - `docker container start postgres-nest`
+
 ### Remove a docker container
 
 `docker container rm postgres-nest`
@@ -279,5 +287,48 @@ Manage databse without writing code.
 ### Setup
 
 ![create-server](assets/setup-postgres/create-server.png)
+
 ![define-name](assets/setup-postgres/define-name.png)
+
 ![define-connection](assets/setup-postgres/define-connection.png)
+
+![create database](assets/setup-postgres/create-database.png)
+
+![name database](assets/setup-postgres/name-database.png)
+
+## Type ORM
+
+[TypeORM Documentation](https://typeorm.io)
+
+`npm i typeorm @nestjs/typeorm pg`
+
+- typeorm: like Knexjs but for typescript
+- @nestjs/typeorm: help integrate typeorm with nestjs
+- pg is the official driver for postgresql and is needed for typeorm to sit on top of it.
+
+![what is orm](assets/typeorm/what-is-orm.png)
+
+![pros](assets/typeorm/pros.png)
+![cons](assets/typeorm/cons.png)
+![example](assets/typeorm/example.png)
+
+### Implementing TypeORM
+
+![implementing-typeorm](assets/typeorm/implementing-typeorm.png)
+
+
+
+#### Active Record vs Data Mapper
+[Active Record vs Data Mapper](https://typeorm.io/#/active-record-data-mapper)
+Echelon uses **Data Mapper**.
+  - For big applications.
+  - uses Repository pattern.
+    - A way to make custom sql queries like knexjs.
+      - Can be place in the service or in another file with a class.
+
+#### creating new table
+
+![defining new table](assets/typeorm/defining-new-table.png)
+
+Note: Half of the class about database has been setup and understanding.
+

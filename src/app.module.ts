@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksModule } from './tasks/tasks.module';
 
 /* modules organize the archicture of the nest app
@@ -11,6 +12,34 @@ import { TasksModule } from './tasks/tasks.module';
   - only one system is allow.
  */
 @Module({
-  imports: [TasksModule],
+  imports: [
+    TasksModule,
+
+    /* connecting the database to nestjs
+      - the connection is configured in the ormconfig.json file
+      - the ormconfig.json file is a json file that tells nestjs how to connect to the database
+      - this is similar to how postgresql was configured 
+     */
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'task-management',
+      /* entites translate to  
+        - the table in the database
+        - schema in the database
+        You can load explicity entities or load all entities (autoLoadAllEntities: true)
+        - autoLoadAllEntities is cleaner and teacher preferred
+      */
+      autoLoadEntities: true,
+      /* synchronize: true: always keep your database schema in sync 
+      or you can do manual migrations
+        - is an advance case
+      */
+      synchronize: true,
+    }),
+  ],
 })
 export class AppModule {}
