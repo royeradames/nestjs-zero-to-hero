@@ -318,15 +318,16 @@ Manage databse without writing code.
 
 ![implementing-typeorm](assets/typeorm/implementing-typeorm.png)
 
-
-
 #### Active Record vs Data Mapper
+
+Like Angular template (active records) and reactive forms (data mapper).
 [Active Record vs Data Mapper](https://typeorm.io/#/active-record-data-mapper)
 Echelon uses **Data Mapper**.
-  - For big applications.
-  - uses Repository pattern.
-    - A way to make custom sql queries like knexjs.
-      - Can be place in the service or in another file with a class.
+
+- For big applications.
+- uses Repository pattern.
+  - A way to make custom sql queries like knexjs.
+    - Can be place in the service or in another file with a class.
 
 #### creating new table
 
@@ -341,3 +342,10 @@ Note: Half of the class about database has been setup and understanding.
 ##### Setting up the repository for property injection
 
 ![setting up the repository for property injection](assets/typeorm/setting-up-the-repository-for-property-injection.png)
+
+Repositories come with a wide methods that you can use
+
+- see the documentation for more information.
+- <https://typeorm.io/#/repository-api>
+
+![view table data in pgadmin](assets/typeorm/view-table-data-in-pgadmin.png)

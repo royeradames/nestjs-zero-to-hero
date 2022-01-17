@@ -1,7 +1,7 @@
 /* by giving the .entity.ts typeORM knows how to auto load it */
 
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { TaskStatus } from '../task.model';
+import { TaskStatus } from '../task-status.enum';
 
 /*  @Entity() set the class to be an (table) entity 
     typeORM has a similar syntax to class-validator

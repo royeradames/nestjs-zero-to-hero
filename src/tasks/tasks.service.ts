@@ -1,15 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
-  DeleteTaskResponse,
-  DeleteStatus,
-  Task,
+  // DeleteTaskResponse,
+  // DeleteStatus,
+  // Task,
   TaskStatus,
-} from './task.model';
-import { v4 as uuid } from 'uuid';
+} from './task-status.enum';
+// import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
 // import { PatchField, PatchTaskDto } from './dto/patch-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { TasksRepository } from './tasks.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Task } from './dto/task.entity';
 
 /* great for handling business logic
 - error messages
@@ -18,97 +21,85 @@ import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
  */
 @Injectable()
 export class TasksService {
-  tasks: Task[] = [];
+  constructor(
+    /* typeorm requires @InjectRepository(<repository-name>) to be use for the injection to work 
+    - list of methods https://typeorm.io/#/repository-api
 
-  getAllTasks(): Task[] {
-    return this.tasks;
-  }
+    you can do some queries here but the repository is great for creating template for reusing the queries
+    - makes the code drier
+    - easier to test
+    */
+    @InjectRepository(TasksRepository)
+    private tasksRepository: TasksRepository,
+  ) {}
+  // tasks: Task[] = [];
+  // getAllTasks(): Task[] {
+  //   return this.tasks;
+  // }
+  // getTasksWithFilters(filterDto: GetTasksFilterDto): Task[] {
+  //   const { status, search } = filterDto;
+  //   let tasks = this.getAllTasks();
+  //   if (status) {
+  //     tasks = tasks.filter((task) => task.status === status);
+  //   }
+  //   if (search) {
+  //     tasks = tasks.filter(
+  //       (task) =>
+  //         task.title.includes(search) || task.description.includes(search),
+  //     );
+  //   }
+  //   return tasks;
+  // }
 
-  getTasksWithFilters(filterDto: GetTasksFilterDto): Task[] {
-    const { status, search } = filterDto;
-    let tasks = this.getAllTasks();
-    if (status) {
-      tasks = tasks.filter((task) => task.status === status);
-    }
-    if (search) {
-      tasks = tasks.filter(
-        (task) =>
-          task.title.includes(search) || task.description.includes(search),
-      );
-    }
-    return tasks;
-  }
-
-  getTaskById(id: string): Task {
+  /* whenever you work with database the work will be async
+  - you can use async/await to make it sync
+  - and the returining type needs to be a promise
+    - Promise<DTO-name>
+   */
+  async getTaskById(id: string): Promise<Task> {
     //  try to get task
-    const task = this.tasks.find((task) => task.id === id);
+    const found = await this.tasksRepository.findOne(id);
 
     // if not found, throw an error (404 not found)
-    if (!task) {
-      /* list of nestjs execeptions 
+    if (!found) {
+      /* list of nestjs execeptions
         - https://docs.nestjs.com/exception-filters#built-in-http-exceptions
         - if a js error bubbles up nest will default to responding with a 500 error
       */
-      throw new NotFoundException(`Task with id ${id} not found`);
+      throw new NotFoundException(`Task with ID "${id}" not found`);
     }
 
     // otherwise, return the found task
-    return task;
+    return found;
   }
 
-  createTask(createTaskDto: CreateTaskDto): Task {
-    const task: Task = {
-      /* 
-        - What is a UUID?
-            - A universally unique identifier (UUID) is a 128-bit number used to identify information in computer systems.
-            - https://www.youtube.com/watch?v=w0VFcVYIfhg
-        - Auto increment vs UUID
-            - https://www.youtube.com/watch?v=s5Im6LWfLrY
-        */
-      id: uuid(),
-      /* you need validation so that the spread operator doesn't introduce malicious code */
-      ...createTaskDto,
-      /* this is the power of enum. It's like using or with specific string AND you can call them like variables 😃 */
-      status: TaskStatus.OPEN,
-    };
-    this.tasks.push(task);
-    return task;
+  createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.tasksRepository.createTask(createTaskDto);
   }
 
-  // partiallyUpdateTask(
-  //   id: string,
-  //   field: PatchField,
-  //   updateTaskDto: PatchTaskDto,
-  // ): Task {
-  //   this.getTaskById(id);
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    // make sure the task exist
+    const task = await this.getTaskById(id);
 
-  //   this.tasks = this.tasks.map((task) => {
-  //     console.log('task', task);
-  //     const foundTask = task.id === id;
-  //     return foundTask
-  //       ? {
-  //           ...task,
-  //           ...updateTaskDto,
-  //         }
-  //       : task;
-  //   });
+    const updatedStatus = await this.tasksRepository.save({ ...task, status });
 
-  //   return this.getTaskById(id);
-  // }
-
-  updateTaskStatus(id: string, updateTaskStatusDto: UpdateTaskStatusDto): Task {
-    const task = this.getTaskById(id);
-    task.status = updateTaskStatusDto.status;
-    return task;
+    return updatedStatus;
   }
 
-  deleteTask(id: string): DeleteTaskResponse {
-    const task = this.getTaskById(id);
-    this.tasks = this.tasks.filter((task) => task.id !== id);
-    return {
-      id: task.id,
-      message: 'Task deleted',
-      status: DeleteStatus.SUCCESS,
-    };
+  async deleteTask(id: string): Promise<void> {
+    /* delete is prefer over remove because delete makes less database calls
+    - more calls = slow database
+    - or require scalling $$$
+     */
+    const result = await this.tasksRepository.delete(id);
+
+    /* it's useful to console log the store result and see what useful properties it provideds like 
+    - affected 
+      - number of rows affected
+    */
+    const noRowsAffected = result.affected === 0;
+    if (noRowsAffected) {
+      throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
   }
 }
