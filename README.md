@@ -48,6 +48,8 @@
       - [creating new table](#creating-new-table)
       - [Creating repository](#creating-repository)
         - [Setting up the repository for property injection](#setting-up-the-repository-for-property-injection)
+  - [Auth](#auth)
+    - [JWT](#jwt)
 
 ## CLI Generation
 
@@ -349,3 +351,16 @@ Repositories come with a wide methods that you can use
 - <https://typeorm.io/#/repository-api>
 
 ![view table data in pgadmin](assets/typeorm/view-table-data-in-pgadmin.png)
+
+## Auth
+
+### JWT
+
+![what are json web tockens?](assets/jwt/what-are-json-web-tockens.png)
+![structure](assets/jwt/structure.png)
+![structure](assets/jwt/structure.png)
+![example](assets/jwt/example.png)
+![authorizing](assets/jwt/authorizing.png)
+![rejecting](assets/jwt/rejecting.png)
+![rejecting](assets/jwt/rejecting-2.png)
+![more about](assets/jwt/more-about.png)
