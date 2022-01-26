@@ -364,3 +364,5 @@ Repositories come with a wide methods that you can use
 ![rejecting](assets/jwt/rejecting.png)
 ![rejecting](assets/jwt/rejecting-2.png)
 ![more about](assets/jwt/more-about.png)
+
+Don't save sensitive information in the token because in [jwt.io](https://jwt.io) you can easily decript the token.
