@@ -38,6 +38,8 @@ import { TasksModule } from './tasks/tasks.module';
       /* synchronize: true: always keep your database schema in sync 
       or you can do manual migrations
         - is an advance case
+        -dangerous after you have a database with data
+          - solution: migrations with the cli
       */
       synchronize: true,
     }),

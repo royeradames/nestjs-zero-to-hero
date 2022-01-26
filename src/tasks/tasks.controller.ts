@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { Task } from './dto/task.entity';
+import { Task } from './task.entity';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { TaskStatus } from './task-status.enum';
 // import { PatchField, PatchTaskDto } from './dto/patch-task.dto';
