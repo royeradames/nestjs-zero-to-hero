@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksModule } from './tasks/tasks.module';
+import { AuthModule } from './auth/auth.module';
 
 /* modules organize the archicture of the nest app
 - everything start in the app.module.ts file (root module)
@@ -43,6 +44,8 @@ import { TasksModule } from './tasks/tasks.module';
       */
       synchronize: true,
     }),
+
+    AuthModule,
   ],
 })
 export class AppModule {}

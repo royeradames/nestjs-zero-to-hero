@@ -315,7 +315,7 @@ Manage databse without writing code.
 ![example](assets/typeorm/example.png)
 
 ### Implementing TypeORM
-
+c
 ![implementing-typeorm](assets/typeorm/implementing-typeorm.png)
 
 #### Active Record vs Data Mapper
