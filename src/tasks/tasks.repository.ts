@@ -3,6 +3,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { Task } from './task.entity';
 import { TaskStatus } from './task-status.enum';
+import { User } from 'src/auth/User.entity';
 
 /* tell typeorm that this will be a repository of task 
 - normally the default are used
@@ -46,7 +47,7 @@ export class TasksRepository extends Repository<Task> {
     return tasks;
   }
 
-  async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+  async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
     /* you need validation so that the spread operator doesn't introduce malicious code */
     const { title, description } = createTaskDto;
 
@@ -66,6 +67,8 @@ export class TasksRepository extends Repository<Task> {
       description,
       /* this is the power of enum. It's like using or with specific string AND you can call them like variables 😃 */
       status: TaskStatus.OPEN,
+      /* due to the task entity having a relationship with user, you can just add a user instance and it will be inputed into the database */
+      user,
     });
     /* you can now change task instance like any object
       task.status = TaskStatus.DONE; 

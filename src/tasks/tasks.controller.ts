@@ -15,6 +15,8 @@ import { Task } from './task.entity';
 import { TaskStatus } from './task-status.enum';
 import { TasksService } from './tasks.service';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/User.entity';
 
 @Controller('tasks')
 // restrict the tasks at the controller level
@@ -39,8 +41,9 @@ export class TasksController {
     /* @body lets you capture the body, and passing a string lets you desconstruct it */
     /* it takes less mental real state to name things the same across, dto, controller, and service */
     @Body() createTaskDto: CreateTaskDto,
+    @GetUser() user: User,
   ): Promise<Task> {
-    return this.tasksService.createTask(createTaskDto);
+    return this.tasksService.createTask(createTaskDto, user);
   }
 
   @Patch('/:id/status')
