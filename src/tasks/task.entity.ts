@@ -1,6 +1,7 @@
 /* by giving the .entity.ts typeORM knows how to auto load it */
 
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/auth/User.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 
 /*  @Entity() set the class to be an (table) entity 
@@ -21,4 +22,11 @@ export class Task {
 
   @Column()
   status: TaskStatus;
+
+  /* like User OneToMany relationship 
+    - eager
+      - automatically fetch the column yes or no
+  */
+  @ManyToOne((_type) => User, (user) => user.tasks, { eager: false })
+  user: User;
 }
