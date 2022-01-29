@@ -36,7 +36,8 @@ export class TasksRepository extends Repository<Task> {
         Lower is a sql method
         - https://www.w3schools.com/sql/func_sqlserver_lower.asp
 
-        * because andWhere stickes the where class together, add () to make each andWhere class its own where condition
+        * bug: search by pass where userId; fix: () whole addWhere statement
+        because andWhere stiches the where class together, add () to make andWhere  with or and like into a single where statement
          */
         '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))',
         // :search is like a param variable, and the search object is the key value pair. Both have to match
