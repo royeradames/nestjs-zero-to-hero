@@ -12,12 +12,15 @@ import { User } from 'src/auth/User.entity';
 */
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
-  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+  async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const { status, search } = filterDto;
 
     /* create a query using the query builder */
     // task is what refer to the Task entity
     const query = this.createQueryBuilder('task');
+
+    // only get the tasks that belong to the user
+    query.where('task.userId = :userId', { userId: user.id });
 
     /* if status is defined then add a where clause to the query */
     if (status) {
@@ -32,8 +35,10 @@ export class TasksRepository extends Repository<Task> {
           - https://www.w3schools.com/sql/sql_like.asp
         Lower is a sql method
         - https://www.w3schools.com/sql/func_sqlserver_lower.asp
+
+        * because andWhere stickes the where class together, add () to make each andWhere class its own where condition
          */
-        'LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search)',
+        '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))',
         // :search is like a param variable, and the search object is the key value pair. Both have to match
         { search: `%${search}%` },
       );
