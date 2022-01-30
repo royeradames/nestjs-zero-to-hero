@@ -50,6 +50,7 @@
         - [Setting up the repository for property injection](#setting-up-the-repository-for-property-injection)
   - [Auth](#auth)
     - [JWT](#jwt)
+  - [Logging](#logging)
 
 ## CLI Generation
 
@@ -317,6 +318,7 @@ Manage databse without writing code.
 ![example](assets/typeorm/example.png)
 
 ### Implementing TypeORM
+
 c
 ![implementing-typeorm](assets/typeorm/implementing-typeorm.png)
 
@@ -366,3 +368,9 @@ Repositories come with a wide methods that you can use
 ![more about](assets/jwt/more-about.png)
 
 Don't save sensitive information in the token because in [jwt.io](https://jwt.io) you can easily decript the token.
+
+## Logging
+
+![types of log](assets/logging/types-of-log.png)
+
+![log levels](assets/logging/log-levels.png)
