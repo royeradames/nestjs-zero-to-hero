@@ -51,6 +51,9 @@
   - [Auth](#auth)
     - [JWT](#jwt)
   - [Logging](#logging)
+    - [Two options that it can take](#two-options-that-it-can-take)
+    - [Verbose](#verbose)
+    - [Error](#error)
 
 ## CLI Generation
 
@@ -374,3 +377,48 @@ Don't save sensitive information in the token because in [jwt.io](https://jwt.io
 ![types of log](assets/logging/types-of-log.png)
 
 ![log levels](assets/logging/log-levels.png)
+
+### Two options that it can take
+
+```ts
+private logger = new Logger("TasksRepository", true)
+```
+
+  1. context string:
+   A string name
+
+  2. boolean
+
+- true: track speed in miliseconds
+- false: don't track speed
+
+### Verbose
+
+```ts
+this.logger.verbose(
+  `User "${user.username}" retrieving all tasks. Filters: ${JSON.stringify(
+    filterDto,
+  )}`,
+  true,
+  );
+```
+
+### Error
+
+```ts
+ let tasks;
+    try {
+      tasks = await query.getMany();
+    } catch (error) {
+      this.logger.error(
+        `Failed to get tasks for user "${
+          user.username
+        }", Filters: ${JSON.stringify(filterDto)}`,
+        error.stack,
+      );
+      throw new InternalServerErrorException();
+    }
+    return tasks;
+```
+
+![log error example](assets/logging/log-error-example.png)

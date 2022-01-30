@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   ParseUUIDPipe,
   Patch,
@@ -23,6 +24,9 @@ import { User } from 'src/auth/User.entity';
 // restrict the tasks at the controller level
 @UseGuards(AuthGuard())
 export class TasksController {
+  /* Make a new instance of logger with the context of string "TasksController" */
+  private logger = new Logger('TasksController');
+
   constructor(private tasksService: TasksService) {}
 
   @Get()
@@ -30,6 +34,12 @@ export class TasksController {
     @Query() filterDto: GetTasksFilterDto,
     @GetUser() user: User,
   ): Promise<Task[]> {
+    this.logger.verbose(
+      `User "${user.username}" retrieving all tasks. Filters: ${JSON.stringify(
+        filterDto,
+      )}`,
+      true,
+    );
     // if twe have any filters defined, call tasksService. getTasksWithFilters
     // otherwise, just get all tasks
     return this.tasksService.getTasks(filterDto, user);
@@ -50,6 +60,12 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto,
     @GetUser() user: User,
   ): Promise<Task> {
+    this.logger.verbose(
+      `User "${user.username}" creating a new task. Data: ${JSON.stringify(
+        createTaskDto,
+      )}`,
+    ),
+      true;
     return this.tasksService.createTask(createTaskDto, user);
   }
 

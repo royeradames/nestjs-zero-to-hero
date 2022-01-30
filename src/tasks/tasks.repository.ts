@@ -4,6 +4,7 @@ import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { Task } from './task.entity';
 import { TaskStatus } from './task-status.enum';
 import { User } from 'src/auth/User.entity';
+import { InternalServerErrorException, Logger } from '@nestjs/common';
 
 /* tell typeorm that this will be a repository of task 
 - normally the default are used
@@ -12,6 +13,7 @@ import { User } from 'src/auth/User.entity';
 */
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
+  private logger = new Logger('TasksService');
   async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const { status, search } = filterDto;
 
@@ -48,8 +50,18 @@ export class TasksRepository extends Repository<Task> {
     
     - getMany means that you are expecting an array of results
      */
-
-    const tasks = await query.getMany();
+    let tasks;
+    try {
+      tasks = await query.getMany();
+    } catch (error) {
+      this.logger.error(
+        `Failed to get tasks for user "${
+          user.username
+        }", Filters: ${JSON.stringify(filterDto)}`,
+        error.stack,
+      );
+      throw new InternalServerErrorException();
+    }
     return tasks;
   }
 
