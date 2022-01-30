@@ -43,18 +43,32 @@ export class TasksService {
   - and the returining type needs to be a promise
     - Promise<DTO-name>
    */
-  async getTaskById(id: string): Promise<Task> {
+  async getTaskById(id: string, user: User): Promise<Task> {
     //  try to get task
-    const found = await this.tasksRepository.findOne(id);
-
-    // if not found, throw an error (404 not found)
-    if (!found) {
-      /* list of nestjs execeptions
+    /* finone can accept an object for the first input that acts like a where clause */
+    let found;
+    try {
+      // * When passed null or undefined, the query will match with every entity in the repository and return the first record.
+      found = await this.tasksRepository.findOneOrFail({ where: { id, user } });
+    } catch (error) {
+      /* if not found, throw an error (404 not found)
+        - see error-console.log image for details
+      list of nestjs execeptions
         - https://docs.nestjs.com/exception-filters#built-in-http-exceptions
         - if a js error bubbles up nest will default to responding with a 500 error
       */
       throw new NotFoundException(`Task with ID "${id}" not found`);
     }
+
+    // const found = await this.tasksRepository.findOneOrFail({ id, user });
+    // // if not found, throw an error (404 not found)
+    // if (!found) {
+    //   /* list of nestjs execeptions
+    //     - https://docs.nestjs.com/exception-filters#built-in-http-exceptions
+    //     - if a js error bubbles up nest will default to responding with a 500 error
+    //   */
+    //   throw new NotFoundException(`Task with ID "${id}" not found`);
+    // }
 
     // otherwise, return the found task
     return found;
@@ -64,21 +78,25 @@ export class TasksService {
     return this.tasksRepository.createTask(createTaskDto, user);
   }
 
-  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+  async updateTaskStatus(
+    id: string,
+    status: TaskStatus,
+    user: User,
+  ): Promise<Task> {
     // make sure the task exist
-    const task = await this.getTaskById(id);
+    const task = await this.getTaskById(id, user);
 
     const updatedStatus = await this.tasksRepository.save({ ...task, status });
 
     return updatedStatus;
   }
 
-  async deleteTask(id: string): Promise<void> {
+  async deleteTask(id: string, user: User): Promise<void> {
     /* delete is prefer over remove because delete makes less database calls
     - more calls = slow database
     - or require scalling $$$
      */
-    const result = await this.tasksRepository.delete(id);
+    const result = await this.tasksRepository.delete({ id, user });
 
     /* it's useful to console log the store result and see what useful properties it provideds like 
     - affected 
