@@ -54,6 +54,7 @@
     - [Two options that it can take](#two-options-that-it-can-take)
     - [Verbose](#verbose)
     - [Error](#error)
+  - [Config Module](#config-module)
 
 ## CLI Generation
 
@@ -422,3 +423,10 @@ this.logger.verbose(
 ```
 
 ![log error example](assets/logging/log-error-example.png)
+
+
+## Config Module
+
+`yarn add @nestjs/config`
+
+env variables define in the scripts overwrite the env variables in the .env file.

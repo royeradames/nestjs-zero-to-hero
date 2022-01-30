@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import {
   // DeleteTaskResponse,
   // DeleteStatus,
@@ -9,11 +9,11 @@ import {
 import { CreateTaskDto } from './dto/create-task.dto';
 // import { PatchField, PatchTaskDto } from './dto/patch-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { TasksRepository } from './tasks.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 import { User } from 'src/auth/User.entity';
+// import { ConfigService } from '@nestjs/config';
 
 /* great for handling business logic
 - error messages
@@ -31,8 +31,10 @@ export class TasksService {
     - easier to test
     */
     @InjectRepository(TasksRepository)
-    private tasksRepository: TasksRepository,
-  ) {}
+    private tasksRepository: TasksRepository /* this is how you can get access to the current env file in a class */, // private configService: ConfigService,
+  ) {
+    // console.log(this.configService.get('TEST_VALUE'));
+  }
 
   getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     return this.tasksRepository.getTasks(filterDto, user);

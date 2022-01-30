@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksModule } from './tasks/tasks.module';
 import { AuthModule } from './auth/auth.module';
 
+/* module needs to be install */
+import { ConfigModule } from '@nestjs/config';
 /* modules organize the archicture of the nest app
 - everything start in the app.module.ts file (root module)
 - similar to angular, the root module is the entry point of the application
@@ -14,6 +16,15 @@ import { AuthModule } from './auth/auth.module';
  */
 @Module({
   imports: [
+    /* handles the .env files */
+    ConfigModule.forRoot({
+      /* read the corrent env file for each of the staging options
+      - dev
+      - production
+      * The STAGE environment variable is set by script
+       */
+      envFilePath: [`.env.stage.${process.env.STAGE}`],
+    }),
     TasksModule,
 
     /* connecting the database to nestjs
