@@ -1,6 +1,7 @@
 /* is an enjectable class */
 
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -13,10 +14,13 @@ import { UsersRepository } from './users.repository';
 export class JwStrategy extends PassportStrategy(Strategy) {
   constructor(
     @InjectRepository(UsersRepository) private usersRepository: UsersRepository,
+    /* get access to the current .env file */
+    private configService: ConfigService,
   ) {
     super({
       /* needs to match the same one from the module file */
-      secretOrKey: 'topSecret51',
+      // secretOrKey: 'secreat123',
+      secretOrKey: configService.get<string>('JWT_SECRET'),
       /* beares token is the most common away to handle jwt */
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
