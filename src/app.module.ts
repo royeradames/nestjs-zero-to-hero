@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 
 /* module needs to be install */
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { configValidationSchema } from './config.schema';
 /* modules organize the archicture of the nest app
 - everything start in the app.module.ts file (root module)
 - similar to angular, the root module is the entry point of the application
@@ -24,6 +25,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       * The STAGE environment variable is set by script
        */
       envFilePath: [`.env.stage.${process.env.STAGE}`],
+      /* 
+      * to better guy me and other to solving an error ith the .env file 
+      replaces a .env.exmaple file
+      */
+      validationSchema: configValidationSchema,
     }),
     TasksModule,
 

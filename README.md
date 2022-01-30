@@ -55,6 +55,7 @@
     - [Verbose](#verbose)
     - [Error](#error)
   - [Config Module](#config-module)
+  - [Schema validation](#schema-validation)
 
 ## CLI Generation
 
@@ -424,9 +425,16 @@ this.logger.verbose(
 
 ![log error example](assets/logging/log-error-example.png)
 
-
 ## Config Module
 
 `yarn add @nestjs/config`
 
 env variables define in the scripts overwrite the env variables in the .env file.
+
+## Schema validation
+
+![schema](assets/config-schema-validation/schema.png)
+
+![applying schema](assets/config-schema-validation/applying-schema.png)
+
+![fail validation](assets/config-schema-validation/fail-validation.png)
