@@ -6,6 +6,7 @@ import * as Joi from '@hapi/joi';
 - can replace the .env.example file
 */
 export const configValidationSchema = Joi.object({
+  PORT: Joi.number().default(3000),
   STAGE: Joi.string().valid('dev', 'prod').required(),
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().default(5432).required(),

@@ -84,28 +84,42 @@ import { configValidationSchema } from './config.schema';
        */
       useFactory: async (configService: ConfigService) =>
         /* the return will be the configuration for this module */
-        ({
-          type: 'postgres',
-          host: configService.get('DB_HOST'),
-          port: configService.get('DB_PORT'),
-          username: configService.get('DB_USERNAME'),
-          password: configService.get('DB_PASSWORD'),
-          database: configService.get('DB_DATABASE'),
-          /* entites translate to
+        {
+          /* know when production is being used
+            - product requires ssl
+            - ssl is a security layer
+            - we are turning it off so we don't have to deal with ssl
+              - not best practice
+            - SSL can be a class in it self
+           */
+          const isProduction = configService.get('STAGE') === 'prod';
+          return {
+            ssl: isProduction,
+            extra: {
+              ssl: isProduction ? { rejectUnauthorized: false } : null,
+            },
+            type: 'postgres',
+            host: configService.get('DB_HOST'),
+            port: configService.get('DB_PORT'),
+            username: configService.get('DB_USERNAME'),
+            password: configService.get('DB_PASSWORD'),
+            database: configService.get('DB_DATABASE'),
+            /* entites translate to
         - the table in the database
         - schema in the database
         You can load explicity entities or load all entities (autoLoadAllEntities: true)
         - autoLoadAllEntities is cleaner and teacher preferred
       */
-          autoLoadEntities: true,
-          /* synchronize: true: always keep your database schema in sync
+            autoLoadEntities: true,
+            /* synchronize: true: always keep your database schema in sync
       or you can do manual migrations
         - is an advance case
         -dangerous after you have a database with data
           - solution: migrations with the cli
       */
-          synchronize: true,
-        }),
+            synchronize: true,
+          };
+        },
     }),
 
     AuthModule,

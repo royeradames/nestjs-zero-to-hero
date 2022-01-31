@@ -56,6 +56,9 @@
     - [Error](#error)
   - [Config Module](#config-module)
   - [Schema validation](#schema-validation)
+  - [Heroku Credentials](#heroku-credentials)
+    - [Getting Database Credentials](#getting-database-credentials)
+    - [Environment Configuration for Heroku](#environment-configuration-for-heroku)
 
 ## CLI Generation
 
@@ -438,3 +441,16 @@ env variables define in the scripts overwrite the env variables in the .env file
 ![applying schema](assets/config-schema-validation/applying-schema.png)
 
 ![fail validation](assets/config-schema-validation/fail-validation.png)
+
+## Heroku Credentials
+
+### Getting Database Credentials
+
+![select databse](assets/heroku-deployment/select-database.png)
+
+![databse credentials](assets/heroku-deployment/database-credentials.png)
+
+### Environment Configuration for Heroku
+
+- SSL
+- Port
