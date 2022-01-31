@@ -18,7 +18,9 @@ async function bootstrap() {
   */
   app.useGlobalInterceptors(new TransformInterceptor());
 
-  /* handle the dynamic ports by heroku or use the default port value */
+  /* handle the dynamic ports by heroku or use the default port value]
+   * dev port is coming from join default PORT value
+   */
   const port = process.env.PORT;
   await app.listen(port);
   logger.log(`Aplication is running on port ${port}`, true);
