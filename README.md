@@ -59,6 +59,9 @@
   - [Heroku Credentials](#heroku-credentials)
     - [Getting Database Credentials](#getting-database-credentials)
     - [Environment Configuration for Heroku](#environment-configuration-for-heroku)
+    - [Deploy with heroku CLI](#deploy-with-heroku-cli)
+      - [Set enviroment variables in Heroku](#set-enviroment-variables-in-heroku)
+      - [Procfile](#procfile)
 
 ## CLI Generation
 
@@ -453,4 +456,39 @@ env variables define in the scripts overwrite the env variables in the .env file
 ### Environment Configuration for Heroku
 
 - SSL
+  - See App module
 - Port
+  - See main.ts
+
+### Deploy with heroku CLI
+
+`heroku git:remote -a task-management-royeradames`
+
+- push repo to heroku
+
+#### Set enviroment variables in Heroku
+
+`heroku config:set NPM_CONFIG_PRODUCTION=false -a task-management-royeradames`
+
+- help solve typescript issue with heroku
+  - Due to ts build time and run time
+
+`heroku config:set NODE_ENV=production -a task-management-royeradames`
+
+`heroku config:set STAGE=prod -a task-management-royeradames`
+
+Also, set all of .env vars with Heroku database crendentials:
+
+- `heroku config:set DB_HOST= -a task-management-royeradames`
+- `heroku config:set DB_PORT= -a task-management-royeradames`
+- `heroku config:set DB_USERNAME= -a task-management-royeradames`
+- `heroku config:set DB_PASSWORD= -a task-management-royeradames`
+- `heroku config:set DB_DATABASE= -a task-management-royeradames`
+
+#### Procfile
+
+Tells heroku what to run when it deploys.
+
+`web` is the default job for heroku. It exposes a certain port when executing the command.
+
+It basically overwrite running the start script to what ever script you want.
