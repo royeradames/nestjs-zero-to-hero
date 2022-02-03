@@ -62,6 +62,7 @@
     - [Deploy with heroku CLI](#deploy-with-heroku-cli)
       - [Set enviroment variables in Heroku](#set-enviroment-variables-in-heroku)
       - [Procfile](#procfile)
+      - [Deploy](#deploy)
 
 ## CLI Generation
 
@@ -477,6 +478,8 @@ env variables define in the scripts overwrite the env variables in the .env file
 
 `heroku config:set STAGE=prod -a task-management-royeradames`
 
+`heroku config:set JWT_SECRET= -a task-management-royeradames`
+
 Also, set all of .env vars with Heroku database crendentials:
 
 - `heroku config:set DB_HOST= -a task-management-royeradames`
@@ -492,3 +495,9 @@ Tells heroku what to run when it deploys.
 `web` is the default job for heroku. It exposes a certain port when executing the command.
 
 It basically overwrite running the start script to what ever script you want.
+
+#### Deploy
+
+`git push -f heroku HEAD:master`
+
+or go to heroku and deploy it.
