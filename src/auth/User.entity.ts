@@ -17,6 +17,7 @@ export class User {
 
   /* joins the tables together
     - type is the entity type
+      * no need to have the argument _type
     - second function is what key does it join
     - eager is eager loading
       - eager means that when ever we fetch the user, we will fetch all the tasks (on true)
@@ -24,8 +25,10 @@ export class User {
       * removes the need to manully fetch the tasks
     the need to soft mirrow each other. 
       - Task needs a user many to one relationship
+    * eager defaults to true
+    
 
    */
-  @OneToMany((_type) => Task, (task) => task.user, { eager: true })
+  @OneToMany(() => Task, (task) => task.user)
   tasks: Task[];
 }

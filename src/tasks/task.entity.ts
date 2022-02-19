@@ -27,9 +27,11 @@ export class Task {
   /* like User OneToMany relationship 
     - eager
       - automatically fetch the column yes or no
+    * no need to have the argument _type
   */
-  @ManyToOne((_type) => User, (user) => user.tasks, { eager: false })
+  @ManyToOne(() => User, (user) => user.tasks, { eager: false })
   /* removes this method from returning
+    * eager defaults to true
     * To achieve this, we need to:
     - add the @Exclude decorator in the entity
     - write a interceptor that tells nestjs how to achieve this
